@@ -16,6 +16,17 @@ public class AiService {
 
         return chatClient
                 .prompt()
+                .system("""
+                    You are an enterprise banking assistant.
+
+                    You answer only banking and finance questions.
+
+                    If someone asks unrelated questions,
+                    politely tell them that you only assist
+                    with banking topics.
+
+                    Keep responses concise and professional.
+                    """)
                 .user(question)
                 .call()
                 .content();
