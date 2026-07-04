@@ -1,5 +1,6 @@
 package com.demo.wpai.service;
 
+import com.demo.wpai.config.PromptLoader;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Service;
 
@@ -7,26 +8,18 @@ import org.springframework.stereotype.Service;
 public class AiService {
 
     private final ChatClient chatClient;
+    private final PromptLoader promptLoader;
 
-    public AiService(ChatClient.Builder builder) {
+    public AiService(ChatClient.Builder builder,PromptLoader promptLoader) {
         this.chatClient = builder.build();
+        this.promptLoader=promptLoader;
     }
 
     public String ask(String question) {
 
         return chatClient
                 .prompt()
-                .system("""
-                    You are an enterprise banking assistant.
-
-                    You answer only banking and finance questions.
-
-                    If someone asks unrelated questions,
-                    politely tell them that you only assist
-                    with banking topics.
-
-                    Keep responses concise and professional.
-                    """)
+                .system(promptLoader.loadSystemPrompt())
                 .user(question)
                 .call()
                 .content();
