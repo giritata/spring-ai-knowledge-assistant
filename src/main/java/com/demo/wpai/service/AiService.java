@@ -1,6 +1,8 @@
 package com.demo.wpai.service;
 
 import com.demo.wpai.config.PromptLoader;
+import com.demo.wpai.dto.ChatRequest;
+import com.demo.wpai.dto.ChatResponse;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Service;
 
@@ -15,14 +17,14 @@ public class AiService {
         this.promptLoader=promptLoader;
     }
 
-    public String ask(String question) {
+    public ChatResponse chat(ChatRequest request) {
 
         return chatClient
                 .prompt()
                 .system(promptLoader.loadSystemPrompt())
-                .user(question)
+                .user(request.question())
                 .call()
-                .content();
+                .entity(ChatResponse.class);
 
     }
 
