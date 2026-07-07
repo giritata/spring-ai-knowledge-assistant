@@ -1,0 +1,9 @@
+Home Loans
+
+Customers applying for a home loan must provide:
+
+- Income proof
+- Employment history
+- Existing liabilities
+
+Approval usually takes 5 business days.

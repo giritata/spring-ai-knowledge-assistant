@@ -1,0 +1,9 @@
+Opening a Bank Account
+
+To open an account, customers must provide:
+
+- Passport or Driver Licence
+- Proof of Address
+- Tax Identification Number
+
+Processing usually takes one business day.

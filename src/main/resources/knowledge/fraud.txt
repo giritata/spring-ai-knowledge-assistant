@@ -1,0 +1,7 @@
+Fraud Reporting
+
+Customers should immediately block their card
+using the mobile application.
+
+Fraud investigations normally begin within
+24 hours.
