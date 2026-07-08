@@ -15,7 +15,8 @@ public class AiController {
     private final AiService aiService;
 
     @PostMapping("/chat")
-    public ChatResponse ask(@RequestBody ChatRequest request){
+    public ChatResponse chat(
+            @RequestBody ChatRequest request){
 
         return aiService.chat(request);
 

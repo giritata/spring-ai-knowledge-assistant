@@ -28,4 +28,23 @@ public class PromptLoader {
 
     }
 
+    public String loadPrompt(String file) {
+
+        try {
+
+            ClassPathResource resource =
+                    new ClassPathResource(file);
+
+            return new String(
+                    resource.getInputStream().readAllBytes(),
+                    StandardCharsets.UTF_8);
+
+        } catch (IOException e) {
+
+            throw new RuntimeException(e);
+
+        }
+
+    }
+
 }
