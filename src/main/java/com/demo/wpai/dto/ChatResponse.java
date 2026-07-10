@@ -1,12 +1,15 @@
 package com.demo.wpai.dto;
 
+import java.util.List;
+
 public record ChatResponse(
 
         String answer,
 
         String category,
 
-        String confidence
+        String confidence,
+        List<String> sources
 
 ) {
 }

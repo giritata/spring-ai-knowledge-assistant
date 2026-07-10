@@ -38,6 +38,54 @@ public class AiService {
         List<SearchResult> documents =
                 searchService.search(question);
 
+        List<String> sources =
+                documents.stream()
+
+                        .map(r ->
+                                r.chunk()
+                                        .metadata()
+                                        .filename())
+
+                        .distinct()
+
+                        .toList();
+
+        double bestSimilarity =
+                documents.get(0)
+                        .similarity();
+
+        String confidence;
+
+        if (bestSimilarity >= 0.90) {
+
+            confidence = "HIGH";
+
+        } else if (bestSimilarity >= 0.75) {
+
+            confidence = "MEDIUM";
+
+        } else {
+
+            confidence = "LOW";
+
+        }
+
+        if (bestSimilarity < 0.65) {
+
+            return new ChatResponse(
+
+                    "I couldn't find that information in the knowledge base.",
+
+                    "Knowledge Search",
+
+                    "LOW",
+
+                    List.of()
+
+            );
+
+        }
+
         String context = buildContext(documents);
 
         String prompt = loadRagPrompt()
@@ -51,7 +99,7 @@ public class AiService {
                 .call()
                 .content();
 
-        return new ChatResponse(answer, "Knowledge search", "High");
+        return new ChatResponse(answer, "Knowledge search", "High", sources);
 
     }
 
@@ -60,12 +108,18 @@ public class AiService {
     }
 
     private String buildContext(
-            List<SearchResult> results){
+            List<SearchResult> results) {
         StringBuilder builder =
                 new StringBuilder();
 
-        for(SearchResult result : results){
 
+        for (SearchResult result : results) {
+            builder.append("====================================\n");
+            builder.append("Source : ");
+            builder.append(result.chunk()
+                    .metadata()
+                    .filename());
+            builder.append("\n\n");
             builder.append(result.chunk().content());
 
             builder.append("\n\n");
