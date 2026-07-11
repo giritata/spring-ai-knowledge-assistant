@@ -8,7 +8,10 @@ public record KnowledgeMetadata(
 
         String documentType,
 
-        LocalDateTime loadedAt
+        LocalDateTime loadedAt,
+        String relativePath,
+        String language,
+        String projectName
 
 ) {
 }

@@ -75,7 +75,7 @@ public class KnowledgeLoader implements ApplicationRunner {
                 new KnowledgeMetadata(
                         fileName,
                         "knowledge",
-                        LocalDateTime.now());
+                        LocalDateTime.now(),null,null,null);
 
         KnowledgeChunk chunk =
                 new KnowledgeChunk(
