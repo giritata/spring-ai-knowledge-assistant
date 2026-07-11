@@ -1,6 +1,6 @@
 package com.demo.wpai.codebase.reader;
 
-import com.demo.wpai.codebase.model.KnowledgeDocument;
+import com.demo.wpai.document.model.KnowledgeDocument;
 
 import java.io.IOException;
 import java.nio.file.Path;

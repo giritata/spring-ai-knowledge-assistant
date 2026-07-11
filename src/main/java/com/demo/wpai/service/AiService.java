@@ -42,9 +42,7 @@ public class AiService {
                 documents.stream()
 
                         .map(r ->
-                                r.chunk()
-                                        .metadata()
-                                        .filename())
+                                r.chunk().id())
 
                         .distinct()
 
@@ -116,9 +114,7 @@ public class AiService {
         for (SearchResult result : results) {
             builder.append("====================================\n");
             builder.append("Source : ");
-            builder.append(result.chunk()
-                    .metadata()
-                    .filename());
+            builder.append(result.chunk());
             builder.append("\n\n");
             builder.append(result.chunk().content());
 

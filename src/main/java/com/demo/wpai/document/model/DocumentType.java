@@ -1,4 +1,4 @@
-package com.demo.wpai.codebase.model;
+package com.demo.wpai.document.model;
 
 public enum DocumentType {
     JAVA,

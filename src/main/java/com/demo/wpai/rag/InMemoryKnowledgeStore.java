@@ -1,5 +1,6 @@
 package com.demo.wpai.rag;
 
+import com.demo.wpai.document.model.KnowledgeChunk;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

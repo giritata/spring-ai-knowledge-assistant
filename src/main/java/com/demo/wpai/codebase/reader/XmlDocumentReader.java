@@ -1,8 +1,7 @@
 package com.demo.wpai.codebase.reader;
 
-import com.demo.wpai.codebase.model.DocumentType;
-import com.demo.wpai.codebase.model.KnowledgeDocument;
-import com.demo.wpai.codebase.reader.DocumentReader;
+import com.demo.wpai.document.model.DocumentType;
+import com.demo.wpai.document.model.KnowledgeDocument;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;

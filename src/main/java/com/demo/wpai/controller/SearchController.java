@@ -37,7 +37,7 @@ public class SearchController {
 
                 result.chunk().id(),
 
-                result.chunk().metadata().filename(),
+                result.chunk().toString(),
 
                 result.similarity(),
 

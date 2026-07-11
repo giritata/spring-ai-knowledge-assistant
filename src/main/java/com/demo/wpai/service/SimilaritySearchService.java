@@ -1,7 +1,6 @@
 package com.demo.wpai.service;
 
 import com.demo.wpai.rag.InMemoryKnowledgeStore;
-import com.demo.wpai.rag.KnowledgeChunk;
 import com.demo.wpai.rag.SearchResult;
 import org.springframework.ai.embedding.EmbeddingModel;
 import org.springframework.stereotype.Service;
@@ -36,7 +35,7 @@ public class SimilaritySearchService {
                     double similarity =
                             cosineSimilarity(
                                     questionEmbedding,
-                                    chunk.embedding());
+                                    null);
 
                     return new SearchResult(
                             chunk,

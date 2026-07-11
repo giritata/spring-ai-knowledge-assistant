@@ -1,6 +1,11 @@
 package com.demo.wpai.codebase;
 
-import com.demo.wpai.codebase.model.KnowledgeDocument;
+import com.demo.wpai.document.embedding.KnowledgeEmbeddingPipeline;
+import com.demo.wpai.document.model.EmbeddedKnowledgeChunk;
+import com.demo.wpai.document.model.KnowledgeChunk;
+import com.demo.wpai.document.model.KnowledgeDocument;
+import com.demo.wpai.document.pipeline.KnowledgeIndexingPipeline;
+import com.demo.wpai.document.store.InMemoryVectorStore;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
@@ -12,12 +17,10 @@ import java.util.List;
 @Component
 public class CodebaseScannerRunner implements ApplicationRunner {
 
-    private final KnowledgeIndexer loader;
-    private final KnowledgeIndexer knowledgeIndexer;
+    private final KnowledgeIndexingPipeline pipeline;
 
-    public CodebaseScannerRunner(KnowledgeIndexer loader, KnowledgeIndexer knowledgeIndexer) {
-        this.loader = loader;
-        this.knowledgeIndexer = knowledgeIndexer;
+    public CodebaseScannerRunner(KnowledgeIndexingPipeline pipeline) {
+        this.pipeline = pipeline;
     }
 
     @Override
@@ -26,25 +29,7 @@ public class CodebaseScannerRunner implements ApplicationRunner {
         Path project =
                 Path.of("C:\\DC\\spring-petclinic");
 
-        List<KnowledgeDocument> documents =
-                knowledgeIndexer.index(project);
-
-        System.out.println("================================");
-        System.out.println("Documents Indexed : "
-                + documents.size());
-        System.out.println("================================");
-
-        documents.forEach(document -> {
-
-            System.out.println(document.fileName());
-
-            System.out.println(document.type());
-
-            System.out.println(document.size());
-
-            System.out.println("--------------------------------");
-
-        });
+        pipeline.index(project);
 
     }
 

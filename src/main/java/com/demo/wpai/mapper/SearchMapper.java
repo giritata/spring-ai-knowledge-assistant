@@ -11,7 +11,7 @@ public class SearchMapper {
 
         return new SearchResponse(
                 result.chunk().id(),
-                result.chunk().metadata().filename(),
+                null,
                 result.similarity(),
                 result.chunk().content()
         );

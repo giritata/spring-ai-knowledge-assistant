@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class EmbeddingController {
 
-    private final EmbeddingService embeddingService;
+    //private final EmbeddingService embeddingService;
 
     @GetMapping
     public float[] embedding(
             @RequestParam String text){
 
-        return embeddingService.embed(text);
+        return null;
 
     }
 
@@ -26,7 +26,7 @@ public class EmbeddingController {
     public int dimensions(
             @RequestParam String text){
 
-        return embeddingService.dimensions(text);
+        return 1;
 
     }
 

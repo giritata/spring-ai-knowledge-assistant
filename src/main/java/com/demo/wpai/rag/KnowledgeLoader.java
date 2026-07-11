@@ -1,5 +1,6 @@
 package com.demo.wpai.rag;
 
+import com.demo.wpai.document.model.KnowledgeChunk;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.embedding.EmbeddingModel;
@@ -80,9 +81,7 @@ public class KnowledgeLoader implements ApplicationRunner {
         KnowledgeChunk chunk =
                 new KnowledgeChunk(
                         id,
-                        content,
-                        embedding,
-                        metadata);
+                        content,null);
 
         store.add(chunk);
 
