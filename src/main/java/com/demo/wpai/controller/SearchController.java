@@ -1,50 +1,63 @@
 package com.demo.wpai.controller;
 
+import com.demo.wpai.document.search.SearchResult;
+import com.demo.wpai.document.search.VectorSearchService;
+import com.demo.wpai.dto.SearchRequest;
 import com.demo.wpai.dto.SearchResponse;
-import com.demo.wpai.rag.SearchResult;
-import com.demo.wpai.service.SimilaritySearchService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import com.demo.wpai.mapper.SearchMapper;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/search")
-@RequiredArgsConstructor
+@RequestMapping("/api/search")
 public class SearchController {
 
-    private final SimilaritySearchService similaritySearchService;
+    private final VectorSearchService vectorSearchService;
 
-    @GetMapping
+    public SearchController(
+            VectorSearchService vectorSearchService) {
+
+        this.vectorSearchService = vectorSearchService;
+
+    }
+
+    @PostMapping
     public List<SearchResponse> search(
-            @RequestParam String question) {
+            @RequestBody SearchRequest request) {
 
-        SearchMapper searchMapper = new SearchMapper();
+        return vectorSearchService
 
-        return similaritySearchService.search(question)
+                .search(request.question())
+
                 .stream()
-                .map(searchMapper::toResponse)
+
+                .map(this::toResponse)
+
                 .toList();
 
     }
-    private SearchResponse toResponse(SearchResult result) {
+
+    private SearchResponse toResponse(
+            SearchResult result) {
 
         return new SearchResponse(
 
-                result.chunk().id(),
-
-                result.chunk().toString(),
-
                 result.similarity(),
 
-                result.chunk().content()
+                result.chunk().chunk().source(),
+
+                preview(result.chunk().chunk().content())
 
         );
+
     }
 
+    private String preview(String content) {
+
+        return content.substring(
+                0,
+                Math.min(300,
+                        content.length()));
+    }
 
 }
