@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/search")
+@RequestMapping("/api/search/code")
 public class SearchController {
 
     private final VectorSearchService vectorSearchService;
@@ -44,9 +44,27 @@ public class SearchController {
 
                 result.similarity(),
 
-                result.chunk().chunk().source(),
+                result.chunk()
 
-                preview(result.chunk().chunk().content())
+                        .chunk()
+
+                        .source(),
+
+                result.chunk()
+
+                        .chunk()
+
+                        .title(),
+
+                preview(
+
+                        result.chunk()
+
+                                .chunk()
+
+                                .content()
+
+                )
 
         );
 

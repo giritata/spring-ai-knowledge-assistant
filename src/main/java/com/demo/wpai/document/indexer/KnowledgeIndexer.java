@@ -6,6 +6,7 @@ import com.demo.wpai.document.model.KnowledgeChunk;
 import com.demo.wpai.document.model.KnowledgeDocument;
 import com.demo.wpai.codebase.reader.DocumentReader;
 import com.demo.wpai.document.factory.DocumentReaderFactory;
+import com.demo.wpai.document.store.KnowledgeStore;
 import com.demo.wpai.factory.DocumentChunkerFactory;
 import org.springframework.stereotype.Service;
 
@@ -23,14 +24,18 @@ public class KnowledgeIndexer {
 
     private final DocumentChunkerFactory chunkerFactory;
 
+    private final KnowledgeStore knowledgeStore;
+
     public KnowledgeIndexer(
             DocumentScanner scanner,
             DocumentReaderFactory readerFactory,
-            DocumentChunkerFactory chunkerFactory) {
+            DocumentChunkerFactory chunkerFactory,
+            KnowledgeStore knowledgeStore) {
 
         this.scanner = scanner;
         this.readerFactory = readerFactory;
         this.chunkerFactory = chunkerFactory;
+        this.knowledgeStore = knowledgeStore;
     }
 
     public List<KnowledgeChunk> index(Path projectPath)
@@ -40,9 +45,6 @@ public class KnowledgeIndexer {
                 scanner.scan(projectPath);
 
         List<KnowledgeChunk> chunks =
-                new ArrayList<>();
-
-        List<KnowledgeDocument> documents =
                 new ArrayList<>();
 
         for (Path file : files) {

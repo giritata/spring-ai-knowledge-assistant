@@ -36,4 +36,12 @@ public class InMemoryVectorStore {
 
     }
 
+    public void replaceAll(
+            List<EmbeddedKnowledgeChunk> chunks) {
+
+        clear();
+
+        addAll(chunks);
+
+    }
 }

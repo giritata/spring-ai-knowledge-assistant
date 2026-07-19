@@ -6,7 +6,9 @@ public record SearchResponse(
 
         String source,
 
-        String preview
+        String title,
+
+        String content
 
 ) {
 }
