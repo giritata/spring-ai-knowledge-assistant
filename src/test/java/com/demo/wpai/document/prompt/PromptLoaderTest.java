@@ -16,7 +16,7 @@ class PromptLoaderTest {
     void shouldLoadExplainCodePrompt() {
 
         String prompt =
-                promptLoader.load("explain-code");
+                promptLoader.loadTaskPrompt("explain-code");
 
         assertThat(prompt)
                 .isNotBlank()

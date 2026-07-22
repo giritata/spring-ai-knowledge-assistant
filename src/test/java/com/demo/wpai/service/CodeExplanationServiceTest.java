@@ -1,5 +1,7 @@
 package com.demo.wpai.service;
 
+import com.demo.wpai.ai.prompt.Audience;
+import com.demo.wpai.ai.prompt.KnowledgeType;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,11 +19,11 @@ class CodeExplanationServiceTest {
 
         // Given
         String question =
-                "Explain OwnerController.";
+                "Explain how Veterinarian data is stored.";
 
         // When
         String answer =
-                codeExplanationService.explain(question);
+                codeExplanationService.explain(question, Audience.TEST_ENGINEER, KnowledgeType.DOCUMENT);
 
         // Then
         assertThat(answer)

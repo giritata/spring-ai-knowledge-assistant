@@ -55,7 +55,7 @@ public class RagChatService {
 
         String systemPrompt =
 
-                promptLoader.loadSystemPrompt()
+                promptLoader.loadSystemPrompt("")
 
                         + "\n\n"
 

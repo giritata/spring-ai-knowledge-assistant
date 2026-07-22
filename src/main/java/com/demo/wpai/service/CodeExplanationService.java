@@ -1,5 +1,7 @@
 package com.demo.wpai.service;
 
+import com.demo.wpai.ai.prompt.Audience;
+import com.demo.wpai.ai.prompt.KnowledgeType;
 import com.demo.wpai.document.prompt.KnowledgeContextBuilder;
 import com.demo.wpai.document.prompt.PromptLoader;
 import com.demo.wpai.document.prompt.PromptTemplate;
@@ -34,31 +36,34 @@ public class CodeExplanationService {
         this.knowledgeContextBuilder = knowledgeContextBuilder;
     }
 
-    public String explain(String question){
+    public String explain(String question, Audience audience, KnowledgeType knowledgeType){
         List<SearchResult> results =
                 vectorSearchService.search(question);
 
         String context =
                 knowledgeContextBuilder.build(results);
 
-        String template =
-                promptLoader.load("explain-code");
+        String systemPrompt =
+                promptLoader.loadSystemPrompt("enterprise-system");
 
-        String prompt =
-                new PromptTemplate(template)
+        String taskPrompt =
+                promptLoader.loadTaskPrompt("explain-code");
 
-                        .render(
+        String renderedTask =
+                new PromptTemplate(taskPrompt)
+                        .render(Map.of(
+                                "audience", audience.name(),
+                                "knowledgeType",
+                                knowledgeType.name(),
+                                "context", context,
+                                "question", question));
 
-                                Map.of(
+        String finalPrompt =
+                systemPrompt
+                        + "\n\n"
+                        + renderedTask;
 
-                                        "context", context,
-
-                                        "question", question
-
-                                )
-
-                        );
-        return chatModel.call(prompt);
+        return chatModel.call(finalPrompt);
     }
 
 

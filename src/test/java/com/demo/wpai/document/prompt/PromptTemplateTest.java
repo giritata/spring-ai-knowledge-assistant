@@ -19,7 +19,7 @@ class PromptTemplateTest {
 
         // Given
         String template =
-                promptLoader.load("explain-code");
+                promptLoader.loadTaskPrompt("explain-code");
 
         PromptTemplate prompt =
                 new PromptTemplate(template);
