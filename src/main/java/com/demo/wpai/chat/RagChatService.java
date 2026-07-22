@@ -1,6 +1,6 @@
 package com.demo.wpai.chat;
 
-import com.demo.wpai.config.PromptLoader;
+import com.demo.wpai.document.prompt.PromptLoader;
 import com.demo.wpai.document.search.SearchResult;
 import com.demo.wpai.document.search.VectorSearchService;
 import com.demo.wpai.dto.ChatRequest;

@@ -1,4 +1,4 @@
-package com.demo.wpai.config;
+package com.demo.wpai.document.prompt;
 
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
@@ -28,23 +28,25 @@ public class PromptLoader {
 
     }
 
-    public String loadPrompt(String file) {
+    public String load(String promptName) {
 
         try {
 
             ClassPathResource resource =
-                    new ClassPathResource(file);
+                    new ClassPathResource(
+                            "prompts/" + promptName + ".md");
 
             return new String(
                     resource.getInputStream().readAllBytes(),
                     StandardCharsets.UTF_8);
 
-        } catch (IOException e) {
+        } catch (IOException ex) {
 
-            throw new RuntimeException(e);
+            throw new RuntimeException(
+                    "Unable to load prompt: " + promptName,
+                    ex);
 
         }
-
     }
 
 }
