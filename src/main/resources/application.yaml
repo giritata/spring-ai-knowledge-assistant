@@ -11,3 +11,6 @@ spring:
 wpai:
   embedding:
     model: text-embedding-3-small
+
+  sample:
+    project: C:\DC\spring-petclinic

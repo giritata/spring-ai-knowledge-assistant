@@ -1,10 +1,14 @@
 package tech.nasr.domain.source.loader;
 
-import tech.nasr.domain.knowledgebase.KnowledgeBase;
+import java.io.IOException;
+import java.nio.file.Path;
+
 import tech.nasr.domain.source.KnowledgeSource;
 
 public interface KnowledgeLoader {
 
-    KnowledgeBase load(KnowledgeSource source);
+    boolean supports(KnowledgeSource source);
+
+    Path load(KnowledgeSource source) throws IOException;
 
 }

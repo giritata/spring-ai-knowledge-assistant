@@ -11,6 +11,8 @@ import tech.nasr.document.store.KnowledgeStore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import tech.nasr.domain.source.KnowledgeSource;
+import tech.nasr.domain.source.loader.KnowledgeLoader;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -30,6 +32,8 @@ public class KnowledgeIndexingPipeline {
 
     private final EmbeddingProperties embeddingProperties;
 
+    private final KnowledgeLoader knowledgeLoader;
+
     private static final Logger log =
             LoggerFactory.getLogger(KnowledgeIndexingPipeline.class);
 
@@ -38,13 +42,23 @@ public class KnowledgeIndexingPipeline {
             KnowledgeEmbeddingPipeline embeddingPipeline,
             InMemoryVectorStore vectorStore,
             KnowledgeStore knowledgeStore,
-            EmbeddingProperties embeddingProperties) {
+            EmbeddingProperties embeddingProperties,
+            KnowledgeLoader knowledgeLoader) {
 
         this.knowledgeIndexer = knowledgeIndexer;
         this.embeddingPipeline = embeddingPipeline;
         this.vectorStore = vectorStore;
         this.knowledgeStore = knowledgeStore;
         this.embeddingProperties = embeddingProperties;
+        this.knowledgeLoader = knowledgeLoader;
+    }
+
+    public void index(KnowledgeSource source) throws IOException {
+
+        Path projectPath = knowledgeLoader.load(source);
+
+        index(projectPath);
+
     }
 
     public void index(Path projectPath)

@@ -1,20 +1,29 @@
 package tech.nasr.domain.source.loader.sample;
 
+import java.io.IOException;
+import java.nio.file.Path;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import tech.nasr.domain.knowledgebase.KnowledgeBase;
+
 import tech.nasr.domain.source.KnowledgeSource;
+import tech.nasr.domain.source.KnowledgeSourceType;
 import tech.nasr.domain.source.loader.KnowledgeLoader;
 
 @Component
 public class SampleKnowledgeLoader implements KnowledgeLoader {
 
-    @Override
-    public KnowledgeBase load(KnowledgeSource source) {
+    @Value("${wpai.sample.project}")
+    private Path sampleProject;
 
-        return new KnowledgeBase(
-                "sample-kb",
-                "Spring PetClinic",
-                source.knowledgeBaseId()
-        );
+    @Override
+    public boolean supports(KnowledgeSource source) {
+        return source.type() == KnowledgeSourceType.SAMPLE;
     }
+
+    @Override
+    public Path load(KnowledgeSource source) throws IOException {
+        return sampleProject;
+    }
+
 }
