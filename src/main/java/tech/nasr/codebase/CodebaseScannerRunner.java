@@ -1,5 +1,6 @@
 package tech.nasr.codebase;
 
+import tech.nasr.application.startup.StartupSummaryPrinter;
 import tech.nasr.document.pipeline.KnowledgeIndexingPipeline;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -17,12 +18,16 @@ public class CodebaseScannerRunner implements ApplicationRunner {
 
     private final KnowledgeSourceService knowledgeSourceService;
 
+    private final StartupSummaryPrinter startupSummaryPrinter;
+
     public CodebaseScannerRunner(
             KnowledgeIndexingPipeline pipeline,
-            KnowledgeSourceService knowledgeSourceService) {
+            KnowledgeSourceService knowledgeSourceService,
+            StartupSummaryPrinter startupSummaryPrinter) {
 
         this.pipeline = pipeline;
         this.knowledgeSourceService = knowledgeSourceService;
+        this.startupSummaryPrinter = startupSummaryPrinter;
     }
 
     @Override
@@ -35,6 +40,8 @@ public class CodebaseScannerRunner implements ApplicationRunner {
         }
 
         KnowledgeSource source = sources.get(0);
+
+        startupSummaryPrinter.print(source);
 
         pipeline.index(source);
 
