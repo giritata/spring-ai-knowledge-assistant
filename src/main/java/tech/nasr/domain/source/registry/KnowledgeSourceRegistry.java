@@ -16,7 +16,8 @@ public class KnowledgeSourceRegistry {
                         "sample",
                         "petclinic-kb",
                         "Spring PetClinic",
-                        KnowledgeSourceType.SAMPLE
+                        KnowledgeSourceType.SAMPLE,
+                        "C:\\DC\\spring-petclinic"
                 )
         );
     }

@@ -4,25 +4,39 @@ import tech.nasr.document.pipeline.KnowledgeIndexingPipeline;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
+import tech.nasr.domain.source.KnowledgeSource;
+import tech.nasr.domain.source.service.KnowledgeSourceService;
 
 import java.nio.file.Path;
+import java.util.List;
 
 @Component
 public class CodebaseScannerRunner implements ApplicationRunner {
 
     private final KnowledgeIndexingPipeline pipeline;
 
-    public CodebaseScannerRunner(KnowledgeIndexingPipeline pipeline) {
+    private final KnowledgeSourceService knowledgeSourceService;
+
+    public CodebaseScannerRunner(
+            KnowledgeIndexingPipeline pipeline,
+            KnowledgeSourceService knowledgeSourceService) {
+
         this.pipeline = pipeline;
+        this.knowledgeSourceService = knowledgeSourceService;
     }
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
 
-        Path project =
-                Path.of("C:\\DC\\spring-petclinic");
+        List<KnowledgeSource> sources = knowledgeSourceService.findAll();
 
-        pipeline.index(project);
+        if (sources.isEmpty()) {
+            throw new IllegalStateException("No KnowledgeSource found.");
+        }
+
+        KnowledgeSource source = sources.get(0);
+
+        pipeline.index(source);
 
     }
 

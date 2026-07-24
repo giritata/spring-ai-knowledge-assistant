@@ -8,7 +8,9 @@ public record KnowledgeSource(
 
         String name,
 
-        KnowledgeSourceType type
+        KnowledgeSourceType type,
+
+        String location
 
 ) {
 }
