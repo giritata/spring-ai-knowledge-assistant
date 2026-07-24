@@ -1,7 +1,6 @@
 package com.demo.wpai.service;
 
 import com.demo.wpai.ai.prompt.Audience;
-import com.demo.wpai.ai.prompt.KnowledgeType;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,7 +22,7 @@ class CodeExplanationServiceTest {
 
         // When
         String answer =
-                codeExplanationService.explain(question, Audience.TEST_ENGINEER, KnowledgeType.DOCUMENT);
+                codeExplanationService.explain(question, Audience.TEST_ENGINEER);
 
         // Then
         assertThat(answer)
@@ -31,5 +30,6 @@ class CodeExplanationServiceTest {
 
         System.out.println(answer);
     }
+
 
 }

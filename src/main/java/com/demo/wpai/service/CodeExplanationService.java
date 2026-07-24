@@ -1,7 +1,10 @@
 package com.demo.wpai.service;
 
+import com.demo.wpai.ai.classifier.KnowledgeTypeClassifier;
+import com.demo.wpai.ai.model.Explanation;
 import com.demo.wpai.ai.prompt.Audience;
 import com.demo.wpai.ai.prompt.KnowledgeType;
+import com.demo.wpai.document.model.DocumentType;
 import com.demo.wpai.document.prompt.KnowledgeContextBuilder;
 import com.demo.wpai.document.prompt.PromptLoader;
 import com.demo.wpai.document.prompt.PromptTemplate;
@@ -24,21 +27,40 @@ public class CodeExplanationService {
 
     private final KnowledgeContextBuilder knowledgeContextBuilder;
 
+    private final KnowledgeTypeClassifier knowledgeTypeClassifier;
+
     public CodeExplanationService(
             VectorSearchService vectorSearchService,
             PromptLoader promptLoader,
             ChatModel chatModel,
-            KnowledgeContextBuilder knowledgeContextBuilder) {
+            KnowledgeContextBuilder knowledgeContextBuilder,
+            KnowledgeTypeClassifier knowledgeTypeClassifier) {
 
         this.vectorSearchService = vectorSearchService;
         this.promptLoader = promptLoader;
         this.chatModel = chatModel;
         this.knowledgeContextBuilder = knowledgeContextBuilder;
+        this.knowledgeTypeClassifier=knowledgeTypeClassifier;
     }
 
-    public String explain(String question, Audience audience, KnowledgeType knowledgeType){
+    public Explanation explain(String question, Audience audience){
+        long start = System.currentTimeMillis();
         List<SearchResult> results =
                 vectorSearchService.search(question);
+
+        double confidence =
+                calculateConfidence(results);
+
+        List<DocumentType> documentTypes =
+                results.stream()
+                        .map(result -> result.chunk()
+                                .chunk()
+                                .type())
+                        .toList();
+
+        KnowledgeType knowledgeType =
+                knowledgeTypeClassifier
+                        .determineKnowledgeType(documentTypes);
 
         String context =
                 knowledgeContextBuilder.build(results);
@@ -53,8 +75,7 @@ public class CodeExplanationService {
                 new PromptTemplate(taskPrompt)
                         .render(Map.of(
                                 "audience", audience.name(),
-                                "knowledgeType",
-                                knowledgeType.name(),
+                                "knowledgeType", knowledgeType.name(),
                                 "context", context,
                                 "question", question));
 
@@ -63,7 +84,37 @@ public class CodeExplanationService {
                         + "\n\n"
                         + renderedTask;
 
-        return chatModel.call(finalPrompt);
+        String answer =  chatModel.call(finalPrompt);
+        long executionTime =
+                System.currentTimeMillis() - start;
+        return new Explanation(
+
+                answer,
+
+                knowledgeType,
+
+                results,
+
+                confidence,
+
+                executionTime
+        );
+    }
+
+    private double calculateConfidence(
+            List<SearchResult> results) {
+
+        if (results.isEmpty()) {
+            return 0.0;
+        }
+
+        return results.stream()
+
+                .mapToDouble(SearchResult::similarity)
+
+                .average()
+
+                .orElse(0.0);
     }
 
 
