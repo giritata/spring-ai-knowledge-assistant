@@ -1,5 +1,8 @@
 package tech.nasr.document.pipeline;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 import tech.nasr.config.EmbeddingProperties;
 import tech.nasr.document.embedding.KnowledgeEmbeddingPipeline;
 import tech.nasr.document.indexer.KnowledgeIndexer;
@@ -8,19 +11,14 @@ import tech.nasr.document.model.KnowledgeChunk;
 import tech.nasr.document.model.KnowledgeIndex;
 import tech.nasr.document.store.InMemoryVectorStore;
 import tech.nasr.document.store.KnowledgeStore;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
 import tech.nasr.domain.source.KnowledgeSource;
 import tech.nasr.domain.source.loader.KnowledgeLoader;
+import tech.nasr.domain.source.loader.KnowledgeLoaderFactory;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.time.Instant;
 import java.util.List;
-import tech.nasr.domain.source.KnowledgeSource;
-import tech.nasr.domain.source.loader.KnowledgeLoader;
-import tech.nasr.domain.source.loader.KnowledgeLoaderFactory;
 
 @Service
 public class KnowledgeIndexingPipeline {
@@ -35,7 +33,6 @@ public class KnowledgeIndexingPipeline {
 
     private final EmbeddingProperties embeddingProperties;
 
-    private final KnowledgeLoader knowledgeLoader;
 
     private final KnowledgeLoaderFactory loaderFactory;
 
@@ -49,7 +46,6 @@ public class KnowledgeIndexingPipeline {
             InMemoryVectorStore vectorStore,
             KnowledgeStore knowledgeStore,
             EmbeddingProperties embeddingProperties,
-            KnowledgeLoader knowledgeLoader,
             KnowledgeLoaderFactory loaderFactory) {
 
         this.knowledgeIndexer = knowledgeIndexer;
@@ -57,7 +53,6 @@ public class KnowledgeIndexingPipeline {
         this.vectorStore = vectorStore;
         this.knowledgeStore = knowledgeStore;
         this.embeddingProperties = embeddingProperties;
-        this.knowledgeLoader = knowledgeLoader;
         this.loaderFactory = loaderFactory;
     }
 

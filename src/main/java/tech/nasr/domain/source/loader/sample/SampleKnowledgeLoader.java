@@ -13,17 +13,14 @@ import tech.nasr.domain.source.loader.KnowledgeLoader;
 @Component
 public class SampleKnowledgeLoader implements KnowledgeLoader {
 
-    @Value("${wpai.sample.project}")
-    private Path sampleProject;
-
     @Override
     public boolean supports(KnowledgeSource source) {
         return source.type() == KnowledgeSourceType.SAMPLE;
     }
 
     @Override
-    public Path load(KnowledgeSource source) throws IOException {
-        return sampleProject;
+    public Path load(KnowledgeSource source) {
+        return Path.of(source.location());
     }
 
 }

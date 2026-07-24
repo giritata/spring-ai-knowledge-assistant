@@ -9,7 +9,7 @@ import java.util.List;
 @Component
 public class KnowledgeSourceRegistry {
 
-    public List<KnowledgeSource> getKnowledgeSources() {
+    public List<KnowledgeSource> findAll() {
 
         return List.of(
                 new KnowledgeSource(

@@ -18,6 +18,6 @@ public class DefaultKnowledgeSourceService implements KnowledgeSourceService {
 
     @Override
     public List<KnowledgeSource> findAll() {
-        return registry.getKnowledgeSources();
+        return registry.findAll();
     }
 }
