@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import tech.nasr.api.dto.KnowledgeSourceResponse;
+import tech.nasr.api.mapper.KnowledgeSourceMapper;
 import tech.nasr.domain.source.KnowledgeSource;
 import tech.nasr.domain.source.service.KnowledgeSourceService;
 
@@ -15,27 +16,14 @@ public class KnowledgeSourceController {
 
     private final KnowledgeSourceService knowledgeSourceService;
 
+    private final KnowledgeSourceMapper mapper;
+
     public KnowledgeSourceController(
-            KnowledgeSourceService knowledgeSourceService) {
+            KnowledgeSourceService knowledgeSourceService,
+            KnowledgeSourceMapper mapper) {
 
         this.knowledgeSourceService = knowledgeSourceService;
-    }
-
-    private KnowledgeSourceResponse toResponse(
-            KnowledgeSource source) {
-
-        return new KnowledgeSourceResponse(
-
-                source.id(),
-
-                source.knowledgeBaseId(),
-
-                source.name(),
-
-                source.type().name()
-
-        );
-
+        this.mapper = mapper;
     }
 
     @GetMapping
@@ -43,7 +31,7 @@ public class KnowledgeSourceController {
 
         return knowledgeSourceService.findAll()
                 .stream()
-                .map(this::toResponse)
+                .map(mapper::toResponse)
                 .toList();
 
     }
