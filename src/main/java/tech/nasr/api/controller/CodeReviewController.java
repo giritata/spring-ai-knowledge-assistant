@@ -1,7 +1,7 @@
-package tech.nasr.controller;
+package tech.nasr.api.controller;
 
-import tech.nasr.dto.CodeReviewRequest;
-import tech.nasr.dto.CodeReviewResponse;
+import tech.nasr.api.dto.CodeReviewRequest;
+import tech.nasr.api.dto.CodeReviewResponse;
 import tech.nasr.service.CodeReviewService;
 import org.springframework.web.bind.annotation.*;
 

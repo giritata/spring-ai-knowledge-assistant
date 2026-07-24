@@ -1,10 +1,10 @@
-package tech.nasr.chat;
+package tech.nasr.intelligence;
 
 import tech.nasr.document.prompt.PromptLoader;
 import tech.nasr.document.retrieval.SearchResult;
 import tech.nasr.document.retrieval.VectorSearchService;
-import tech.nasr.dto.ChatRequest;
-import tech.nasr.dto.ChatResponse;
+import tech.nasr.api.dto.ChatRequest;
+import tech.nasr.api.dto.ChatResponse;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Component;
 

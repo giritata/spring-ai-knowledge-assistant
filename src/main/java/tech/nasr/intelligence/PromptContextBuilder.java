@@ -1,4 +1,4 @@
-package tech.nasr.chat;
+package tech.nasr.intelligence;
 
 import tech.nasr.document.retrieval.SearchResult;
 import org.springframework.stereotype.Component;

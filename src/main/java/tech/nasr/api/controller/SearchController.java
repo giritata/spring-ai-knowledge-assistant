@@ -1,9 +1,9 @@
-package tech.nasr.controller;
+package tech.nasr.api.controller;
 
 import tech.nasr.document.retrieval.SearchResult;
 import tech.nasr.document.retrieval.VectorSearchService;
-import tech.nasr.dto.SearchRequest;
-import tech.nasr.dto.SearchResponse;
+import tech.nasr.api.dto.SearchRequest;
+import tech.nasr.api.dto.SearchResponse;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

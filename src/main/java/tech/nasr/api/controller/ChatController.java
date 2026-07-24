@@ -1,8 +1,8 @@
-package tech.nasr.controller;
+package tech.nasr.api.controller;
 
-import tech.nasr.chat.RagChatService;
-import tech.nasr.dto.ChatRequest;
-import tech.nasr.dto.ChatResponse;
+import tech.nasr.intelligence.RagChatService;
+import tech.nasr.api.dto.ChatRequest;
+import tech.nasr.api.dto.ChatResponse;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

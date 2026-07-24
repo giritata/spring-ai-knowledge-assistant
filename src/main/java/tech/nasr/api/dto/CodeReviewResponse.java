@@ -1,4 +1,4 @@
-package tech.nasr.dto;
+package tech.nasr.api.dto;
 
 import java.util.List;
 
