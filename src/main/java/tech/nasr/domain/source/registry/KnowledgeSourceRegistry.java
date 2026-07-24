@@ -30,7 +30,7 @@ public class KnowledgeSourceRegistry {
 
                         source.getName(),
 
-                        KnowledgeSourceType.valueOf(source.getType()),
+                        source.getType(),
 
                         source.getLocation()
 

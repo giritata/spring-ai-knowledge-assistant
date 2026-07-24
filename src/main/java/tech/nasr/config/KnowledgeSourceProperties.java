@@ -2,6 +2,7 @@ package tech.nasr.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
+import tech.nasr.domain.source.KnowledgeSourceType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +29,7 @@ public class KnowledgeSourceProperties {
 
         private String name;
 
-        private String type;
+        private KnowledgeSourceType type;
 
         private String location;
 
@@ -56,11 +57,11 @@ public class KnowledgeSourceProperties {
             this.name = name;
         }
 
-        public String getType() {
+        public KnowledgeSourceType getType() {
             return type;
         }
 
-        public void setType(String type) {
+        public void setType(KnowledgeSourceType type) {
             this.type = type;
         }
 
