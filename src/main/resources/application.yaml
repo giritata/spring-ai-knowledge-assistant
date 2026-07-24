@@ -12,5 +12,11 @@ wpai:
   embedding:
     model: text-embedding-3-small
 
-  sample:
-    project: C:\DC\spring-petclinic
+  sources:
+
+    - id: sample
+      knowledgeBaseId: petclinic-kb
+      name: Spring PetClinic
+      type: SAMPLE
+      location: C:/DC/spring-petclinic
+
