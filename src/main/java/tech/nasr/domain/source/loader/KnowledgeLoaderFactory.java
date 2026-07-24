@@ -1,8 +1,7 @@
-package tech.nasr.domain.source.loader.factory;
+package tech.nasr.domain.source.loader;
 
 import org.springframework.stereotype.Component;
 import tech.nasr.domain.source.KnowledgeSource;
-import tech.nasr.domain.source.loader.KnowledgeLoader;
 
 import java.util.List;
 

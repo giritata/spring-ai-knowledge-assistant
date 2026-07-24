@@ -18,6 +18,9 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.time.Instant;
 import java.util.List;
+import tech.nasr.domain.source.KnowledgeSource;
+import tech.nasr.domain.source.loader.KnowledgeLoader;
+import tech.nasr.domain.source.loader.KnowledgeLoaderFactory;
 
 @Service
 public class KnowledgeIndexingPipeline {
@@ -34,6 +37,9 @@ public class KnowledgeIndexingPipeline {
 
     private final KnowledgeLoader knowledgeLoader;
 
+    private final KnowledgeLoaderFactory loaderFactory;
+
+
     private static final Logger log =
             LoggerFactory.getLogger(KnowledgeIndexingPipeline.class);
 
@@ -43,7 +49,8 @@ public class KnowledgeIndexingPipeline {
             InMemoryVectorStore vectorStore,
             KnowledgeStore knowledgeStore,
             EmbeddingProperties embeddingProperties,
-            KnowledgeLoader knowledgeLoader) {
+            KnowledgeLoader knowledgeLoader,
+            KnowledgeLoaderFactory loaderFactory) {
 
         this.knowledgeIndexer = knowledgeIndexer;
         this.embeddingPipeline = embeddingPipeline;
@@ -51,11 +58,17 @@ public class KnowledgeIndexingPipeline {
         this.knowledgeStore = knowledgeStore;
         this.embeddingProperties = embeddingProperties;
         this.knowledgeLoader = knowledgeLoader;
+        this.loaderFactory = loaderFactory;
     }
 
-    public void index(KnowledgeSource source) throws IOException {
+    public void index(KnowledgeSource source)
+            throws IOException {
 
-        Path projectPath = knowledgeLoader.load(source);
+        KnowledgeLoader loader =
+                loaderFactory.get(source);
+
+        Path projectPath =
+                loader.load(source);
 
         index(projectPath);
 
